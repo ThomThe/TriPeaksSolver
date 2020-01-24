@@ -12,7 +12,50 @@ public class CardSetup {
             setup.add(card);
         }
 
-//Top Row
+        this.linkCards(setup);
+
+
+
+
+
+        for(int i = 0; i < deckParts.length; i++){
+            Card card = new Card();
+            card.setCard(deckParts[i]);
+            if(i == 0){
+                card.setTopDeck(true);
+                card.setOpen(true);
+            }
+            else{
+                card.setTopDeck(false);
+                card.setOpen(false);
+                card.addBlockedBy(deck.get(i - 1));
+                deck.get(i-1).addBlocks(card);
+            }
+            deck.add(card);
+        }
+    }
+
+    public Card deepCopy(Card input){
+        Card copy = new Card();
+        copy.setValue(input.getValue());//.. copy primitives, deep copy objects again
+
+        return copy;
+    }
+
+    public void createTestSetup(List<Card> testSetup, List<Card> testDeck, List<Card> setup, List<Card> deck){
+        for(int i = 0; i < setup.size(); i++){
+            Card copy = this.deepCopy(setup.get(i));
+            testSetup.add(copy);
+        }
+        this.linkCards(setup);
+        for(int i = 0; i < deck.size(); i++){
+            Card copy = this.deepCopy(deck.get(i));
+            testDeck.add(copy);
+        }
+    }
+
+    public void linkCards(List<Card> setup){
+        //Top Row
         setup.get(0).addBlockedBy(setup.get(3));
         setup.get(0).addBlockedBy(setup.get(4));
         setup.get(1).addBlockedBy(setup.get(5));
@@ -89,41 +132,5 @@ public class CardSetup {
         setup.get(25).addBlocks(setup.get(16));
         setup.get(26).addBlocks(setup.get(16));
         setup.get(27).addBlocks(setup.get(17));
-
-
-
-        for(int i = 0; i < deckParts.length; i++){
-            Card card = new Card();
-            card.setCard(deckParts[i]);
-            if(i == 0){
-                card.setTopDeck(true);
-                card.setOpen(true);
-            }
-            else{
-                card.setTopDeck(false);
-                card.setOpen(false);
-                card.addBlockedBy(deck.get(i - 1));
-                deck.get(i-1).addBlocks(card);
-            }
-            deck.add(card);
-        }
-    }
-
-    public Card deepCopy(Card input){
-        Card copy = new Card();
-        copy.setValue(input.getValue());//.. copy primitives, deep copy objects again
-
-        return copy;
-    }
-
-    public void createTestSetup(List<Card> testSetup, List<Card> testDeck, List<Card> setup, List<Card> deck){
-        for(int i = 0; i < setup.size(); i++){
-            Card copy = this.deepCopy(setup.get(i));
-            testSetup.add(copy);
-        }
-        for(int i = 0; i < deck.size(); i++){
-            Card copy = this.deepCopy(deck.get(i));
-            testDeck.add(copy);
-        }
     }
 }

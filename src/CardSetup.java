@@ -3,6 +3,7 @@ import java.util.List;
 public class CardSetup {
     public void setupCards(List<Card> setup, List<Card> deck, String[] setupParts, String [] deckParts){
 
+        //Creates board cards
         for(int i = 0; i < setupParts.length; i++){
             Card card = new Card();
             card.setCard(setupParts[i]);
@@ -12,12 +13,10 @@ public class CardSetup {
             setup.add(card);
         }
 
+        //Links cards to know which blocks which
         this.linkCards(setup);
 
-
-
-
-
+        //Sets up Deck
         for(int i = 0; i < deckParts.length; i++){
             Card card = new Card();
             card.setCard(deckParts[i]);
@@ -32,25 +31,6 @@ public class CardSetup {
                 deck.get(i-1).addBlocks(card);
             }
             deck.add(card);
-        }
-    }
-
-    public Card deepCopy(Card input){
-        Card copy = new Card();
-        copy.setValue(input.getValue());//.. copy primitives, deep copy objects again
-
-        return copy;
-    }
-
-    public void createTestSetup(List<Card> testSetup, List<Card> testDeck, List<Card> setup, List<Card> deck){
-        for(int i = 0; i < setup.size(); i++){
-            Card copy = this.deepCopy(setup.get(i));
-            testSetup.add(copy);
-        }
-        this.linkCards(setup);
-        for(int i = 0; i < deck.size(); i++){
-            Card copy = this.deepCopy(deck.get(i));
-            testDeck.add(copy);
         }
     }
 
@@ -70,7 +50,7 @@ public class CardSetup {
         setup.get(7).addBlocks(setup.get(2));
         setup.get(8).addBlocks(setup.get(2));
 
-//Second row
+        //Second row
         setup.get(3).addBlockedBy(setup.get(9));
         setup.get(3).addBlockedBy(setup.get(10));
         setup.get(4).addBlockedBy(setup.get(10));
@@ -96,7 +76,8 @@ public class CardSetup {
         setup.get(16).addBlocks(setup.get(7));
         setup.get(16).addBlocks(setup.get(8));
         setup.get(17).addBlocks(setup.get(8));
-//Third row
+
+        //Third row
         setup.get(9).addBlockedBy(setup.get(18));
         setup.get(9).addBlockedBy(setup.get(19));
         setup.get(10).addBlockedBy(setup.get(19));
